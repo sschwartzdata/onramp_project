@@ -52,10 +52,11 @@ def create_connection():
 
     return conn
   
-  
-  def create_tables(conn):
+def drop_tables(conn):
     """
-    Create a new table
+    Drops tables if the exist from the drop_tables_queries list
+    If an error occurs, the error statement is printed
+    
     Parameters:
     conn - connection to the sqlite database
     
@@ -63,10 +64,32 @@ def create_connection():
     None
     """
     for query in create_table_queries:
-    cur = conn.cursor()
-    cur.execute(query)
-    conn.commit()
-    return cur.lastrowid
+        try:
+            cur = conn.cursor()
+            cur.execute(query)
+            conn.commit()
+        excerpt Error as e:
+            print(e)
+  
+def create_tables(conn):
+    """
+    Create a new tables from the create_tables_queries list
+    If an error occurs, the error statement is printed
+    
+    Parameters:
+    conn - connection to the sqlite database
+    
+    Returns:
+    None
+    """
+    for query in create_table_queries:
+        try:
+            cur = conn.cursor()
+            cur.execute(query)
+            conn.commit()
+        excerpt Error as e:
+            print(e)
+    
   
   
 def main():
