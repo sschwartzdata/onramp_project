@@ -1,3 +1,19 @@
+Parsed for tables
+[artist_id]
+
+album_id - [artist_id]['items']['id']
+album_name - [artist_id]['items']['name']
+external_url - [artist_id]['items']['external_urls']
+image_url - [artist_id]['items']['images'][0]['url']
+release_date - [artist_id]['items'][''release_date']
+total_tracks - [artist_id]['items']['total_tracks']
+type - [artist_id]['items']['type']
+album_uri - [artist_id]['items']['uri']
+artist_id - NA
+
+
+OUTPUT:
+
 {'href': 'https://api.spotify.com/v1/artists/26VFTg2z8YR0cCuwLzESi2/albums?offset=0&limit=20&include_groups=album',
  'items': [{'album_group': 'album',
    'album_type': 'album',
