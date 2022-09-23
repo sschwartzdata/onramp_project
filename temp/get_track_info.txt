@@ -1,3 +1,22 @@
+Parsing for table:
+
+[track_id]['track']
+
+track_id - NA
+danceability - [track_id]['track']
+energy - [track_id]['track']
+instrumentalness- [track_id]['track']
+liveness - [track_id]['track']
+loudness - [track_id]['track']
+speechiness - [track_id]['track']
+tempo - [track_id]['track']
+type - [track_id]['track']
+valence - [track_id]['track']
+song_uri - NA
+
+
+OUTPUT:
+
 {'meta': {'analyzer_version': '4.0.0',
   'platform': 'Linux',
   'detailed_status': 'OK',
