@@ -1,29 +1,39 @@
 import sqlite3
 from sqlite3 import Error
 
+def commit():
+    """
+    Commits updates to spotify database
+    
+    Return:
+    None
+    """
+    print "commit"
+    conn.commit()
 
 
 def create_database():
     """
-    - Creates and connects to the sparkifydb
-    - Returns the connection and cursor to sparkifydb
+    - Creates and connects to the spotify database
+    - Returns the connection and cursor to spotify database
     """
     
     # connect to default database
-    conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
-    conn.set_session(autocommit=True)
+    conn = sqlite3.connect("default.db")
     cur = conn.cursor()
     
-    # create sparkify database with UTF8 encoding
+    
+    # create spotify database
     cur.execute("DROP DATABASE IF EXISTS spotify")
-    cur.execute("CREATE DATABASE spotify WITH ENCODING 'utf8' TEMPLATE template0")
+    cur.execute("CREATE DATABASE spotify")
 
     # close connection to default database
     conn.close()    
     
     # connect to spotify database
-    conn = psycopg2.connect("host=127.0.0.1 dbname=spotify user=student password=student")
+    conn = sqlite3.connect("spotify.db")
     cur = conn.cursor()
+    commit()
     
     return cur, conn
 
