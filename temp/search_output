@@ -1,3 +1,14 @@
+parsed for table info:
+artist_id - [number_artist]['id']
+artist_name - [number_artist]['name']
+external_url - [number_artist]['external_url']['sportify']
+genre - [number_artist]['genres'][0]
+image_url - [number_artist]['images'][0]['url']
+followers - [number_artist]['followers']
+popularity - [number_artist]['popularity']
+type - [number_artist]['type']
+artist_uri - [number_artist]['uri']
+
 [{'external_urls': {'spotify': 'https://open.spotify.com/artist/1xLMexpeeTKQ20SwGMaGSK'},
   'followers': {'href': None, 'total': 144633},
   'genres': ['austin americana',
