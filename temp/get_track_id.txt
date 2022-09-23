@@ -1,3 +1,20 @@
+Parsed for Table
+
+[album_id]['items']
+
+track_uri - [album_id]['items']['uri']
+song_name - [album_id]['items']['name']
+external_url - [album_id]['items'][]'external_urls']['spotify']
+duration_ms - [album_id]['items']['duration_ms']
+explicit - [album_id]['items']['explicit']
+disc_number - [album_id]['items']['disc_number']
+type - [album_id]['items']['type']
+song_uri - [album_id]['items']['uri']
+album_id - NA
+
+
+OUTPUT:
+
 {'href': 'https://api.spotify.com/v1/albums/0yMLTRxwcDN5XHjP5w8jAH/tracks?offset=0&limit=50',
  'items': [{'artists': [{'external_urls': {'spotify': 'https://open.spotify.com/artist/26VFTg2z8YR0cCuwLzESi2'},
      'href': 'https://api.spotify.com/v1/artists/26VFTg2z8YR0cCuwLzESi2',
