@@ -10,7 +10,7 @@
 drop_table_artist   = "DROP TABLE IF EXISTS artist"
 drop_table_album    = "DROP TABLE IF EXISTS album"
 drop_table_track    = "DROP TABLE IF EXISTS track"
-drop_table_feature  = "DROP TABLE IF EXISTS track_feature"
+drop_table_track_feature  = "DROP TABLE IF EXISTS track_feature"
 
 # Creating tables
 
@@ -106,4 +106,4 @@ track_feature_table_insert = ("""
 # QUERY LISTS
 
 create_table_queries = [artist_table_create, album_table_create, track_table_create, track_feature_table_create]
-drop_table_queries = [artist_table_drop, album_table_drop, track_table_drop, track_feature_table_drop]
+drop_table_queries = [drop_table_artist, drop_table_album, drop_table_track, drop_table_track_feature]

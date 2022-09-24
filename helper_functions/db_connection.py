@@ -31,8 +31,12 @@ def create_database():
     conn.close()    
     
     # connect to spotify database
-    conn = sqlite3.connect("spotify.db")
-    cur = conn.cursor()
+    try:
+        conn = sqlite3.connect("spotify.db")
+        cur = conn.cursor()
+        print("Successfully connected to the database")
+    except Exception as e:
+        print("Error during connection: ", str(e))
     commit()
     
     return cur, conn
