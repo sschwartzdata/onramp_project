@@ -186,6 +186,7 @@ def null_varification():
               df.isnull().sum().sum())
 
 
+
 def main():
     """
     - Pulls artist information from predetermined list
@@ -222,6 +223,8 @@ def main():
     null_varification()
 
     print("Data pull and verification is complete!")
+
+    return df_artist, df_album_nodup, df_track, df_track_feature
 
 
 if __name__ == "__main__":
