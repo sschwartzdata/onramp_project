@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 
+# Commit changes to database
 def commit():
     """
     Commits updates to spotify database
@@ -8,54 +9,28 @@ def commit():
     Return:
     None
     """
-    print "commit"
+    print ("commit")
     conn.commit()
 
 
-def create_database():
+# Creates connection to database and cursor
+def create_connection(db_path):
     """
     - Creates and connects to the spotify database
     - Returns the connection and cursor to spotify database
     """
-    
-    # connect to default database
-    conn = sqlite3.connect("default.db")
-    cur = conn.cursor()
-    
-    
-    # create spotify database
-    cur.execute("DROP DATABASE IF EXISTS spotify")
-    cur.execute("CREATE DATABASE spotify")
 
-    # close connection to default database
-    conn.close()    
-    
     # connect to spotify database
     try:
-        conn = sqlite3.connect("spotify.db")
+        conn = sqlite3.connect(db_path)
         cur = conn.cursor()
         print("Successfully connected to the database")
     except Exception as e:
         print("Error during connection: ", str(e))
-    commit()
     
     return cur, conn
 
-
-def create_connection():
-    """ Create a connection to the SQLite spotify database
-    
-    Returns:
-    Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(spotify.db)
-    except Error as e:
-        print(e)
-
-    return conn
-  
+# Executes DROP TABLE SQL queries  
 def drop_tables(conn):
     """
     Drops tables if the exist from the drop_tables_queries list
@@ -67,14 +42,16 @@ def drop_tables(conn):
     Returns:
     None
     """
-    for query in create_table_queries:
+    print("Dropping Tables if they exist.")
+    for query in drop_table_queries:
         try:
             cur = conn.cursor()
             cur.execute(query)
             conn.commit()
-        excerpt Error as e:
+        except Error as e:
             print(e)
-  
+ 
+ # Executes CREATE TABLE SQL queries   
 def create_tables(conn):
     """
     Create a new tables from the create_tables_queries list
@@ -86,14 +63,15 @@ def create_tables(conn):
     Returns:
     None
     """
+    print("Creating tables.")
     for query in create_table_queries:
         try:
             cur = conn.cursor()
             cur.execute(query)
             conn.commit()
-        excerpt Error as e:
+        except Error as e:
             print(e)
-    
+    print("Tables have been successfully created.")
   
   
 def main():
@@ -109,10 +87,11 @@ def main():
     
     - Finally, closes the connection. 
     """
-    cur, conn = create_database()
-    
-    drop_tables(cur, conn)
-    create_tables(cur, conn)
+    database = r"C:\Users\sbsch\Desktop\spotify.db"
+    cur, conn = create_connection(database)
+    drop_tables(conn)
+    create_tables(conn)
+
 
     conn.close()
     print("The connection to the spotify database is now closed.")

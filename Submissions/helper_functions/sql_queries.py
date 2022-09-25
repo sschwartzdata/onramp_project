@@ -56,7 +56,7 @@ track_table_create = ("""
 track_feature_table_create = ("""
     CREATE TABLE IF NOT EXISTS track_feature (
         track_id            varchar(50)  PRIMARY KEY
-        , daceablility      double
+        , danceability      double
         , energy            double
         , instrumentalness  double
         , liveness          double
@@ -73,33 +73,33 @@ track_feature_table_create = ("""
 artist_table_insert = ("""
     INSERT INTO artist (artist_id, artist_name, external_url,
     genre, image_url, followers, popularity, type, artist_uri)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT DO NOTHING
-    ;""")
+    """)
 
 album_table_insert = ("""
     INSERT INTO album (album_id, album_name, external_url,
     image_url, release_date, total_tracks, type, album_uri,
     artist_id)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT DO NOTHING
-    ;""")
+    """)
 
 track_table_insert = ("""
     INSERT INTO track (track_id, song_name, external_url,
     duration_ms, explicit, disc_number, type, song_uri,
     album_id)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT DO NOTHING
-    ;""")
+    """)
 
 track_feature_table_insert = ("""
     INSERT INTO track_feature (track_id, daceablility, energy,
     instrumentalness, liveness, loudness, speechiness, tempo,
     type, valence, song_uri)
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT DO NOTHING
-    ;""")
+    """)
 
 
 
