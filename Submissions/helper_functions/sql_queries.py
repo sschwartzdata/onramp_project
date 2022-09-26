@@ -156,7 +156,7 @@ query_max_tempo = ("""
     """)
 
 query_most_dance = ("""
-    CREATE VIEW IF NOT EXISTS top_songs_artist_tempo (
+    CREATE VIEW IF NOT EXISTS top_dance_songs (
     song_name
     , danceability
     )
@@ -171,7 +171,7 @@ query_most_dance = ("""
     """)
 
 query_running_tempo = ("""
-    CREATE VIEW IF NOT EXISTS top_songs_artist_tempo (
+    CREATE VIEW IF NOT EXISTS running_tempo (
     artist_name,
     song_name,
     tempo
@@ -188,7 +188,7 @@ query_running_tempo = ("""
     JOIN track_feature AS tf
         ON t.track_id = tf.track_id
     WHERE tf.tempo BETWEEN 120 and 125
-    ORDER BY tf.danceability DESC
+    ORDER BY tf.tempo DESC
     """)
 
 # QUERY LISTS

@@ -60,7 +60,7 @@ def main():
     con = db_con.create_connection()
     db_con.drop_tables(con, sql_queries.drop_table_queries)
     db_con.create_tables(con, sql_queries.create_table_queries)
-
+    db_con.commit(con)
     # LOADING DATA TO DATABASE
 
     table_insert = [(df_artist, 'artist'), (df_album_nodup, 'album'),
@@ -71,6 +71,7 @@ def main():
 
     # CREATING VIEWS IN DATABASE
     db_views.create_views(con, sql_queries.create_view_queries)
+    db_con.commit(con)
 
 
 if __name__ == "__main__":

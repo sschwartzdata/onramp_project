@@ -23,7 +23,7 @@ class DatabaseGen:
 
         return conn
 
-    def commit(self):
+    def commit(self, con):
         """
         Commits changes to spotify database
 
@@ -31,7 +31,7 @@ class DatabaseGen:
         None
         """
         print("commit")
-        conn.commit()
+        con.commit()
 
     # Executes DROP TABLE SQL queries
     def drop_tables(self, conn, drop_table_queries):
