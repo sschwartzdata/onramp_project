@@ -69,7 +69,7 @@ The ETL pipeline extracts data from Spotify's API four times using the package s
   - Create a connection to the database
   - Drop tables if they exist
   - Create tables
-  - use load.py to load data into spotify.py
+  - use `load.py` to load data into spotify.py
 - Analysis
   - Create views in spotipy.bd using create_view.db
   - Create data visualizations using matplotlib and seaborn packages
@@ -77,15 +77,15 @@ The ETL pipeline extracts data from Spotify's API four times using the package s
 
 Running the the ELT pipline:
 - Insure the following python packages are installed
-  -   \<spotipy\>
-  -   \<spotipy.oauth2\>
-  -   \<pandas\>
-  -   \<sqlite3\>
-  -   \<matplotlib\>
-  -   \<seaborn>\
+  -   `spotipy`
+  -   `spotipy.oauth2`
+  -   `pandas`
+  -   `sqlite3`
+  -   `matplotlib`
+  -   `seaborn`
 - Insure that you have a developer account with Spotify and you have the following environmental settings defined on your local computer
-  - \<SPOTIPY_CLIENT_ID >\
-  - \<SPOTIPY_CLIENT_SECRET>\
-  - \<SPOTIPY_REDIRECT_URI>\
-- Run \<python etl.py\>
+  - `SPOTIPY_CLIENT_ID`
+  - `SPOTIPY_CLIENT_SECRET`
+  - `SPOTIPY_REDIRECT_URI`
+- Run `python etl.py`
     - Data will be extracted from the Spotify's API files and transformed and loaded into the spotipy.db.
