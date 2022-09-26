@@ -1,3 +1,10 @@
+"""
+This class contains all of the methods to create/connect to
+the spotify database, drop all existing tables and 
+create the tables.
+"""
+
+
 import sqlite3
 from sqlite3 import Error
 from helper_functions.sql_queries import *
@@ -6,7 +13,9 @@ from helper_functions.sql_queries import *
 class DatabaseGen:
 
     def __init__(self, db_path):
+        # Path to the database
         self.db_path = db_path
+        
 
     def create_connection(self):
         """
@@ -16,12 +25,12 @@ class DatabaseGen:
 
         # connect to spotify database
         try:
-            conn = sqlite3.connect(self.db_path)
+            con = sqlite3.connect(self.db_path)
             print("Successfully connected to the database")
         except Exception as e:
             print("Error during connection: ", str(e))
 
-        return conn
+        return con
 
     def commit(self, con):
         """
