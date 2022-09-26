@@ -1,66 +1,99 @@
+"""
+This class
+
+Methods:
+- pull_artist_albums() 
+- pull_artist_albums()
+- remove_album_dups()
+- get_tracks()
+- get_track_info()
+- return_artist() 
+- return_album() 
+- return_track() 
+- return_track_feature()
+"""
+
+
 # importing packages
 import pandas as pd
 
 class DataPull:
+    # df_artist column names
     _artist_table_columns = ['artist_id', 'artist_name', 'external_url',
                             'genre', 'image_url', 'followers',
                             'popularity', 'type', 'artist_uri']
 
-    # df_album
+    # df_album column names
     _album_table_columns = ['album_id', 'album_name', 'external_url',
                            'image_url', 'release_date', 'total_tracks',
                           'type', 'album_uri', 'artist_id']
 
-    # df_track
+    # df_track column names
     _track_table_columns = ['track_id', 'song_name', 'external_url',
                            'duration_ms', 'explicit', 'disc_number',
                            'type', 'song_uri', 'album_id']
 
-    # df_track_feature
+    # df_track_feature column names
     _track_feature_table_columns = ['track_id', 'danceability', 'energy',
                                    'instrumentalness', 'liveness', 'loudness',
                                    'speechiness', 'tempo', 'type', 'valence',
                                    'song_uri']
 
     def __init__(self, sp):
+        # The connection to Sptify
         self.sp = sp
+        
+        # Creating the empty dataframes
         self.df_artist = pd.DataFrame(columns=self._artist_table_columns)
         self.df_album = pd.DataFrame(columns=self._album_table_columns)
         self.df_album_nodup = pd.DataFrame(columns=self._album_table_columns)
         self.df_track = pd.DataFrame(columns=self._track_table_columns)
         self.df_track_feature = pd.DataFrame(columns=self._track_feature_table_columns)
         
+        # Creating empty list to be filled with ids
         self.artist_ids = []
         self.album_ids = []
         self.track_ids  = []
 
     def artist_data_pull(self, artist_list):
+        """
+        Trys to pull data for each artist in the input list and updates ad_artist with the required data.
+        if an exception arrises, a statement will be printed and the methon will continue without stopping.
+        Parameters: 
+            artist_list (list): a list of artists to pull data about
+        """
         for artist in artist_list:
+            try: 
+                # Requesting results for each artist in list where type is "artist"
+                result = self.sp.search(q=artist, type="artist")
 
-            # Requesting results for each artist in list where type is "artist"
-            result = self.sp.search(q=artist, type="artist")
+                # Selecting all data within 'items' in the pulled data
+                item = result['artists']['items']
 
-            # Selecting all data within 'items' in the pulled data
-            item = result['artists']['items']
+                # Creating a list of required data to enter into artist_df
+                new_row = [item[0]['id'],  # artist id
+                        item[0]['name'],  # artist name
+                        item[0]['external_urls']['spotify'],  # external url
+                        item[0]['genres'][0],  # selecting the first genres
+                        item[0]['images'][0]['url'],  # selection the first image
+                        item[0]['followers']['total'],  # followers
+                        item[0]['popularity'],  # populatrity
+                        item[0]['type'],  # type
+                        item[0]['uri']]  # artist uri
 
-            # Creating a list of required data to enter into artist_df
-            new_row = [item[0]['id'],  # artist id
-                    item[0]['name'],  # artist name
-                    item[0]['external_urls']['spotify'],  # external url
-                    item[0]['genres'][0],  # selecting the first genres
-                    item[0]['images'][0]['url'],  # selection the first image
-                    item[0]['followers']['total'],  # followers
-                    item[0]['popularity'],  # populatrity
-                    item[0]['type'],  # type
-                    item[0]['uri']]  # artist uri
-
-            # Inserting pulled data into last row of artist_df
-            self.df_artist.loc[len(self.df_artist.index)] = new_row
+                # Inserting pulled data into last row of artist_df
+                self.df_artist.loc[len(self.df_artist.index)] = new_row
+              except Exception as e:
+                print(e)
+              
         
         self.artist_ids = self.artist_ids + self.df_artist["artist_id"].to_list()
         
     # Get Spotify catalog information about an artist’s albums
     def pull_artist_albums(self):
+        """
+        Pulls data for all of the required album data for each artistandupdates ad_album with the required data.
+        """
         print("number of artists : " + str(len(self.artist_ids)))
         for artist_id in self.artist_ids:
             # Requesting results for each artist_id in list where type is "album"
