@@ -121,6 +121,10 @@ class DataPull:
 
     # Removing redundant albums
     def remove_album_dups(self):
+        """
+        Removes all albums with duplicated names and those that
+        contain keywords suggesting that they are a remix or similar.
+        """
         # removing albums with same names
         self.df_album_nodup = self.df_album.drop_duplicates(subset=['album_name'])
 
@@ -138,9 +142,10 @@ class DataPull:
 
     # Get Spotify catalog information on tracks
     def get_tracks(self):
-        """ This function searches for the artists name given that
-        was given as an argument and returns the first result. If there
-        are no result, nothing is returned"""
+        """
+        Pulls data for all of the required track data for each
+        non-duplicated album and updates ad_track with the required data.
+        """
         for album_id in self.album_ids:
             results = self.sp.album_tracks(album_id)
             # Selecting all data within 'items' in the pulled data
@@ -164,7 +169,10 @@ class DataPull:
 
     # Get Spotify catalog information on song features
     def get_track_info(self):
-
+        """
+        Pulls data for all of the required track feature data for each
+        track and updates df_track_feature with the required data.
+        """
         for track_id in self.track_ids:
 
             result = self.sp.audio_features(track_id)[0]
@@ -188,13 +196,26 @@ class DataPull:
             self.df_track_feature.loc[len(self.df_track_feature.index)] = new_row
     
     def return_artist(self):
+        """
+        Returns df.artist dataframe
+        """
         return self.df_artist
     
     def return_album(self):
+        """
+        Returns df.album_nodup dataframe
+        (The dataframe without duplicate albums)
+        """
         return self.df_album_nodup
     
     def return_track(self):
+        """
+        Returns df.track dataframe
+        """
         return self.df_track
     
     def return_track_feature(self):
+        """
+        Returns df.track_feature dataframe
+        """
         return self.df_track_feature
