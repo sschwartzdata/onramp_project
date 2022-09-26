@@ -57,21 +57,26 @@ def main():
     # EXTRACTION AND TRANSFORMATION
     # Creates data pull object
     spotify_data_pull = DataPull(sp)
+    print("Artist Dataframe was populated.")
 
     # Pull artist data and populates artist dataframe
     spotify_data_pull.artist_data_pull(search_artists)
 
     # Pull album data and populates album dataframe
     spotify_data_pull.pull_artist_albums()
+    print("Album Dataframe was populated.")
     
     # Removes duplicates and populates cleaned album dataframe
     spotify_data_pull.remove_album_dups()
+    print("Cleaned Album Dataframe was populated.")
     
     # Pull track data and populates track dataframe
     spotify_data_pull.get_tracks()
+    print("Track Dataframe was populated.")
     
     # Pull track feature data and populates track feature dataframe
     spotify_data_pull.get_track_info()
+    print("Track Feature Dataframe was populated.")
 
     # Dataframes
     # Returning the final dataframes to etl.py
@@ -106,13 +111,16 @@ def main():
     
     # loading dataframes into database
     load.load_tables(con, table_insert)
+    print("The data has been loaded into the database.")
 
     # CREATING VIEWS IN DATABASE
     # Creates 5 different view in the database
     db_views.create_views(con, sql_queries.create_view_queries)
+    print("Views have been created in the database.")
     
     # Committing updates
     db_con.commit(con)
+    print("ELT is complete!")
 
 
 if __name__ == "__main__":
