@@ -102,6 +102,32 @@ track_feature_table_insert = ("""
     ON CONFLICT DO NOTHING
     """)
 
+# Counting rows in tables
+
+artist_row_number = ("""
+    SELECT
+    COUNT(*)
+    FROM artist
+    """)
+
+album_row_number = ("""
+    SELECT
+    COUNT(*)
+    FROM album
+    """)
+
+track_row_number = ("""
+    SELECT
+    COUNT(*)
+    FROM track
+    """)
+
+track_feat_row_number = ("""
+    SELECT
+    COUNT(*)
+    FROM track_feature
+    """)
+
 # View Creation
 
 query_longest_song = ("""
@@ -143,7 +169,7 @@ query_max_tempo = ("""
     AS
     SELECT a.artist_name
         , t.song_name
-        , MAX(tf.tempo)
+        , MAX(tf.tempo) AS max_tempo
     FROM artist AS a
     JOIN album AS al
         ON a.artist_id = al.artist_id
@@ -152,7 +178,42 @@ query_max_tempo = ("""
     JOIN track_feature AS tf
         ON t.track_id = tf.track_id
     GROUP BY a.artist_name
-    ORDER BY a.artist_name ASC
+    ORDER BY tf.max_tempo ASC
+    """)
+query_total_songs = ("""
+    CREATE VIEW IF NOT EXISTS artist_song_totals (
+    genre
+    , danceability
+    )
+    AS
+    SELECT a.artist_name
+        , COUNT(t.track_id) AS total_songs
+    FROM artist AS a
+    JOIN album AS al
+        ON a.artist_id = al.artist_id
+    JOIN track AS t
+        ON al.album_id = t.album_id
+    GROUP BY a.artist_name
+    ORDER BY total_songs DESC
+    """)
+
+query_genre_dance = ("""
+    CREATE VIEW IF NOT EXISTS avg_dance_genre (
+    genre
+    , danceability
+    )
+    AS
+    SELECT a.genre
+        , AVG(tf.danceability) AS avg_dance
+    FROM artist AS a
+    JOIN album AS al
+        ON a.artist_id = al.artist_id
+    JOIN track AS t
+        ON al.album_id = t.album_id
+    JOIN track_feature AS tf
+        ON t.track_id = tf.track_id
+    GROUP BY a.genre
+    ORDER BY avg_dance DESC
     """)
 
 query_most_dance = ("""
@@ -188,6 +249,7 @@ query_running_tempo = ("""
     JOIN track_feature AS tf
         ON t.track_id = tf.track_id
     WHERE tf.tempo BETWEEN 120 and 125
+    AND tf.energy > 0.5
     ORDER BY tf.tempo DESC
     """)
 
@@ -198,4 +260,7 @@ create_table_queries = [artist_table_create, album_table_create,
 drop_table_queries = [drop_table_artist, drop_table_album, drop_table_track,
                       drop_table_track_feature]
 create_view_queries = [query_longest_song, query_most_followers,
-                       query_max_tempo, query_most_dance, query_running_tempo]
+                       query_max_tempo, query_most_dance, query_running_tempo,
+                       query_genre_dance, query_total_songs]
+row_count_queries = [artist_row_number, album_row_number, track_row_number,
+                     track_feat_row_number]

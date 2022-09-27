@@ -102,7 +102,8 @@ class DataPull:
         print("number of artists : " + str(len(self.artist_ids)))
         for artist_id in self.artist_ids:
             # Requesting album results for each artist_id in list
-            results = self.sp.artist_albums(artist_id, album_type='album')
+            results = self.sp.artist_albums(artist_id, album_type='album',
+                                            country='US')
 
             # Selecting all data within 'items' in the pulled data
             items = results['items']
