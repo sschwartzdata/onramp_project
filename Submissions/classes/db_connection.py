@@ -1,13 +1,12 @@
 """
 This class contains all of the methods to create/connect to
-the spotify database, drop all existing tables and 
+the spotify database, drop all existing tables and
 create the tables.
 """
 
 
 import sqlite3
 from sqlite3 import Error
-from helper_functions.sql_queries import *
 
 
 class DatabaseGen:
@@ -15,7 +14,6 @@ class DatabaseGen:
     def __init__(self, db_path):
         # Path to the database
         self.db_path = db_path
-        
 
     def create_connection(self):
         """
@@ -39,7 +37,6 @@ class DatabaseGen:
         Return:
         None
         """
-        print("commit")
         con.commit()
 
     # Executes DROP TABLE SQL queries
