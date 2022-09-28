@@ -15,20 +15,16 @@ in the cleaned dataframes.
 Views are created in spotify.db.
 """
 
-# from helper_functions import data_pull
-from tests import null_duplicate
-# from tests import transfer_test
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 from helper_functions import load
 from helper_functions import sql_queries
 from helper_functions import transformation
 from helper_functions import db_views
 from classes.data_pull import DataPull
 from classes.db_connection import DatabaseGen
-#from classes.load import DataLoad
-# import pandas as pd
-import spotipy
-# from spotipy.oauth2 import SpotifyOAuth
-from spotipy.oauth2 import SpotifyClientCredentials
+from tests import null_duplicate
+
 
 
 def main():
@@ -123,8 +119,6 @@ def main():
     # loading dataframes into database
     load.load_tables(con, df_list)
     print("The data has been loaded into the database.")
-
-    # transfer_test.db_comp(df_list, sql_queries.row_count_queries, con)
 
     # CREATING VIEWS IN DATABASE
     # Creates 5 different view in the database
