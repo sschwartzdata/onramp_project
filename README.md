@@ -2,11 +2,40 @@
 Project for final interview round of Onramp's Vanguard Data Engineer Apprenticeship 
 
 ## Description
+Create a data pipeline that extracts, transforms data from Spotify's API using python, and then loads the data into a SQLite database. The database should contain at least 20 artists and 1000 track entries and 5 views. Additionally, three data visualizations will be produced with python which provide some kind of insight.
+<br>
+This readme contains details on:
+1. The environmental and tool setup for the project
+2. The project requirements
+3. The project structure
+4. Pipeline details
+  - Pipeline flow
+  - How to execute the pipeline
+
+## Setup
+Environment Settings
+- Local settings need to include
+  - `SPOTIPY_CLIENT_ID`
+  - `SPOTIPY_CLIENT_SECRET`
+  - `SPOTIPY_REDIRECT_URI`
+- python version
+<br>
+Python Packages
+- For ETL pipeline
+  - `spotipy` version 
+  - `spotipy.oauth2` version 
+  - `pandas` version 
+  - `sqlite3` version 
+  - `pprint`  version 
+- For Visualizations
+  -   `matplotlib` version 
+  -   `seaborn` version 
 
 
-## Requirements
+
+## Project Requirements
 Data requirements:
-- [x] 20 artists of my choise
+- [x] 20 artists of my choice
 - [x] atleast 1000 rows of track data
 
 Process
@@ -15,14 +44,14 @@ Process
 - [x] Load data into database
 - [x] Create 3 required views
 - [x] Create 2 other views
-- [] Create 3 data visualization
+- [X] Create 3 data visualization
 
 
 Deliverables
 - [x] Python Code for ETL pipeline
 - [x] spotify.db file
   - [x] 5 views
-- [] pdf with 3 data visualizations
+- [x] pdf with 3 data visualizations
 
 
 
@@ -33,17 +62,26 @@ Deliverables
 .
 ├── Submissions                 # Test files (alternatively `spec` or `tests`)
 │   ├── etl.py                  # Script to Extract, Transform and Load the data
-│   ├── proof_of_concept.ipynb  # Documents the thought proccess for building the pipeline
+│   ├── proof_of_concept.ipynb  # Documents the thought process for building the pipeline
 │   ├── classes                 # Contains all custom classes used in etl.py
-|   |   ├── data_pull.py                 # Test files (alternatively `spec` or `tests`)
-|   |   ├── db_connection.py             # Test files (alternatively `spec` or `tests`)
+|   |   ├── data_pull.py                      # Test files (alternatively `spec` or `tests`)
+|   |   ├── db_connection.py                  # Test files (alternatively `spec` or `tests`)
 │   ├── db_files                # Contains final database file
-|   |   ├── spotify.db                   # SQLite Spotify database files
+|   |   ├── spotify.db                        # SQLite Spotify database files
 │   ├── helper_functions        # Contains all custom functions and sql queries used in etl.py
-|   |   ├── db_views.py                  # Contains the function used to create the views in spotify.db
-|   |   ├── load.py                      # Contains the function used to load data into spotify.db
-|   |   ├── sql_queries.py               # Contains all SQL queries for the project
+|   |   ├── db_views.py                       # Contains the function used to create the views in spotify.db
+|   |   ├── load.py                           # Contains the function used to load data into spotify.db
+|   |   ├── sql_queries.py                    # Contains all SQL queries for the project
+│   ├── images        # Contains all data visualizations and ERD
+|   |   ├── Visualizations.pdf                # PDF containing visualizations and descriptions
+|   |   ├── Visualizations.pptx               # PPT containing visualizations and descriptions
+|   |   ├── erd.png                           # Entity Relational Diagram for database
+|   |   ├── features_correlation_heatmap.png  # Heatmap visualizations for correlation of track features
+|   |   ├── features_pairplot.png             # scatter plot visualizations for correlation of track features
+|   |   ├── features_violin.png               # Violin plots for select track features
 │   └── test                    # Unit and data validation tests
+|   |   ├── null_duplicate.py                 # Checks for null in duplicated records in all dataframes
+|   |   ├── features_violin.png               # Checks that the number of records in the database matches the dataframes
 └── ...
 
 ```
@@ -71,11 +109,11 @@ The ETL pipeline extracts data from Spotify's API four times using the package s
   - Create tables
   - use `load.py` to load data into spotify.py
 - Analysis
-  - Create views in spotipy.bd using create_view.db
+  - Create views in spotipy.db using `create_view.py`
   - Create data visualizations using matplotlib and seaborn packages
 
 
-Running the the ELT pipline:
+Running the the ELT pipeline:
 - Insure the following python packages are installed
   -   `spotipy`
   -   `spotipy.oauth2`
@@ -88,4 +126,5 @@ Running the the ELT pipline:
   - `SPOTIPY_CLIENT_SECRET`
   - `SPOTIPY_REDIRECT_URI`
 - Run `python etl.py`
-    - Data will be extracted from the Spotify's API files and transformed and loaded into the spotipy.db.
+    - Data will be extracted from the Spotify's API files and transformed and loaded into the spotipy.db
+    - Views will also be created in spotify.db
