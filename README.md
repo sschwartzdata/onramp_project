@@ -81,7 +81,6 @@ Deliverables
 |   |   ├── features_violin.png               # Violin plots for select track features
 │   └── test                    # Unit and data validation tests
 |   |   ├── null_duplicate.py                 # Checks for null in duplicated records in all dataframes
-|   |   ├── features_violin.png               # Checks that the number of records in the database matches the dataframes
 └── ...
 
 ```
