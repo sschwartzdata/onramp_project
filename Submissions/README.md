@@ -18,18 +18,17 @@ Environment Settings
   - `SPOTIPY_CLIENT_ID`
   - `SPOTIPY_CLIENT_SECRET`
   - `SPOTIPY_REDIRECT_URI`
-- python version
+- python version 3.9.7
 <br>
 Python Packages
 - For ETL pipeline
-  - `spotipy` version 
-  - `spotipy.oauth2` version 
-  - `pandas` version 
-  - `sqlite3` version 
-  - `pprint`  version 
+  - `spotipy` version 2.20.0
+  - `spotipy.oauth2` version 2.20.0
+  - `pandas` version 1.3.5
+  - `sqlite3` version 3.37.0
 - For Visualizations
-  -   `matplotlib` version 
-  -   `seaborn` version 
+  -   `matplotlib` version 3.5.0
+  -   `seaborn` version 0.11.2
 
 
 
