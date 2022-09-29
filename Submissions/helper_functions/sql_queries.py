@@ -133,19 +133,27 @@ track_feat_row_number = ("""
 query_longest_song = ("""
     CREATE VIEW IF NOT EXISTS top_artist_time (
     artist_name
+    , song_name
     , duration_ms
     )
     AS
-    SELECT a.artist_name
-    , t.song_name
-    , MAX(t.duration_ms)
-    FROM artist AS a
-    JOIN album AS al
-        ON a.artist_id = al.artist_id
-    JOIN track AS t
-        ON al.album_id = t.album_id
-    GROUP BY a.artist_name
-    ORDER BY a.artist_name ASC
+    SELECT artist_name
+           , song_name
+           , duration_ms
+    FROM
+        (SELECT a.artist_name
+        , t.song_name
+        , t.duration_ms
+        ,Row_Number()
+        over (Partition BY a.artist_name
+        ORDER BY t.duration_ms DESC ) AS Rank
+        FROM artist AS a
+        JOIN album AS al
+            ON a.artist_id = al.artist_id
+        JOIN track AS t
+            ON al.album_id = t.album_id) AS temp_rank
+    WHERE RANK <= 10
+    ORDER BY artist_name ASC, duration_ms DESC
     """)
 
 query_most_followers = ("""
@@ -164,22 +172,30 @@ query_max_tempo = ("""
     CREATE VIEW IF NOT EXISTS top_songs_artist_tempo (
     artist_name
     , song_name
-    , max_tempo
+    , tempo
     )
     AS
-    SELECT a.artist_name
-        , t.song_name
-        , MAX(tf.tempo) AS max_tempo
-    FROM artist AS a
-    JOIN album AS al
-        ON a.artist_id = al.artist_id
-    JOIN track AS t
-        ON al.album_id = t.album_id
-    JOIN track_feature AS tf
-        ON t.track_id = tf.track_id
-    GROUP BY a.artist_name
-    ORDER BY tf.max_tempo ASC
+    SELECT artist_name
+           , song_name
+           , tempo
+    FROM
+        (SELECT a.artist_name
+                , t.song_name
+                , tf.tempo
+                , Row_Number()
+              over (Partition BY a.artist_name
+                    ORDER BY tempo DESC ) AS Rank
+            FROM artist AS a
+            JOIN album AS al
+            ON a.artist_id = al.artist_id
+            JOIN track AS t
+                ON al.album_id = t.album_id
+            JOIN track_feature AS tf
+                ON t.track_id = tf.track_id) AS temp_rank
+    WHERE RANK <= 10
+    ORDER BY artist_name ASC, tempo DESC
     """)
+
 query_total_songs = ("""
     CREATE VIEW IF NOT EXISTS artist_song_totals (
     genre
